@@ -85,6 +85,9 @@ let score = 0
 let maxScore = 0
 
 function setdifficulty(event) {
+  const resultContainer = document.querySelector(".resultContainer");
+  resultContainer.classList.add("hidden")
+  score = 0
   const difficulty = document.getElementById("difficulty").value;
   console.log("livello selezionato: ", difficulty);
   let numSquare;
@@ -114,6 +117,7 @@ function generaBombe(numSquare) {
       bombs.push(bombNumber)
     }
   }
+  console.log(bombs)
 }
 
 function randomNumber(min, max) {
@@ -147,6 +151,8 @@ function generaCella(num, squareperSide) {
 
 function coloraCella() {
   let num = parseInt(this.innerText);
+  this.classList.remove("pointer");
+  this.removeEventListener("click", coloraCella);
   if(bombs.includes(num)){
     this.classList.add("redBg");
     lostGame()
@@ -154,12 +160,18 @@ function coloraCella() {
   else {
     this.classList.add("blueBg");
     score++
+    const punteggio = document.getElementById("punteggio")
+    punteggio.innerHTML = score
     if (score === maxScore) {
-      alert("Hai vinto!");
+      wonGame()
     }
   }
-  this.classList.remove("pointer");
-  this.removeEventListener("click", coloraCella);
+}
+function wonGame(){
+  const resultContainer = document.querySelector(".resultContainer");
+  resultContainer.classList.remove("hidden")
+  const resultBox = document.querySelector(".resultBox");
+  resultBox.innerHTML = "Complimenti! Hai vinto!"
 }
 function lostGame(){
   allCells = document.getElementsByClassName("box")
@@ -173,7 +185,10 @@ function lostGame(){
       allCells[i].classList.add("redBg");
     }
   }
-  alert("Hai perso!");
+  const resultContainer = document.querySelector(".resultContainer");
+  resultContainer.classList.remove("hidden")
+  const resultBox = document.querySelector(".resultBox");
+  resultBox.innerHTML = "Peccato! Hai perso!"
 }
 
 document.getElementById("play").addEventListener("click", setdifficulty);

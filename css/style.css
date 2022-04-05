@@ -10,13 +10,16 @@
     justify-content: space-between;
     height: 50px;
 }
-.headerLeft, .headerRight{
+.headerLeft, .headerRight, .headerScore{
     display: flex;
     align-items: center;
     gap: 5px;
 }
+.headerScore {
+    font-size: 1.4rem;
+}
 h1 {
-    font-size: 2vw;
+    font-size: 1.4rem;
     padding-left: 10px;
 }
 .headerLeft img {
@@ -28,6 +31,24 @@ main {
     background-color: #7FFFD4;
     position: relative;
     overflow-y: auto;
+}
+.resultContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+    width: 100%;
+}
+.resultBox {
+    height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bolder;
+    font-size: 4rem;
 }
 .gridContainer {
     position: absolute;
@@ -61,7 +82,7 @@ main {
     align-items: center;
     width: 80%;
     margin: 0 auto;
-    font-size: 1.5vw;
+    font-size: 1rem;
     gap: 5px;
 }
 .blueBg {
@@ -69,6 +90,9 @@ main {
 }
 .redBg {
     background-color: rgb(128, 5, 5);
+}
+.hidden {
+    display: none;
 }
 
 /* .gridEasy {
