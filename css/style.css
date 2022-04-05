@@ -15,14 +15,24 @@
     align-items: center;
     gap: 5px;
     font-size: 1.4rem;
+    width: 30%;
+}
+.headerScore {
+    justify-content: center;
+}
+.headerRight {
+    justify-content: flex-end;
 }
 
 h1, header select, #play {
     font-size: 1.4rem;
+}
+h1 {
     margin-left: 10px;
 }
 #play {
     padding: 0 10px;
+    margin-left: 10px;
 }
 .headerLeft img {
     height: 30px;
