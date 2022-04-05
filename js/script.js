@@ -155,10 +155,12 @@ function coloraCella() {
   this.removeEventListener("click", coloraCella);
   if(bombs.includes(num)){
     this.classList.add("redBg");
+    this.innerHTML = '<img src="img/bomb.png" alt="bomb">'
     lostGame()
   }
   else {
     this.classList.add("blueBg");
+    this.innerHTML = '<img src="img/okcat.png" alt="ok">'
     score++
     const punteggio = document.getElementById("punteggio")
     punteggio.innerHTML = score
@@ -183,6 +185,7 @@ function lostGame(){
     allCells[i].classList.remove("pointer");
     if (bombs.includes(cellNum)) {
       allCells[i].classList.add("redBg");
+      allCells[i].innerHTML = '<img src="img/bomb.png" alt="bomb">';
     }
   }
   const resultContainer = document.querySelector(".resultContainer");
