@@ -14,13 +14,15 @@
     display: flex;
     align-items: center;
     gap: 5px;
-}
-.headerScore {
     font-size: 1.4rem;
 }
-h1 {
+
+h1, header select, #play {
     font-size: 1.4rem;
-    padding-left: 10px;
+    margin-left: 10px;
+}
+#play {
+    padding: 0 10px;
 }
 .headerLeft img {
     height: 30px;
