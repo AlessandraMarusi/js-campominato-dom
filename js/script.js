@@ -78,53 +78,88 @@ Difetti: Dimensioni non modificabili a seconda del numero di caselle, non è pos
 } */
 
 /* Versione con la griglia come fatta da Clelia */
+
+const bombs = []
+const totalBombs = 16;
+let score = 0
+let maxScore = 0
+
 function setdifficulty(event) {
-    const difficulty = document.getElementById("difficulty").value;
-    console.log("livello selezionato: ", difficulty);
-    let numSquare;
-    switch (difficulty) {
-      case "1":
-      default:
-        numSquare = 100;
-        break;
-      case "2":
-        numSquare = 81;
-        break;
-      case "3":
-        numSquare = 49;
-        break;
+  const difficulty = document.getElementById("difficulty").value;
+  console.log("livello selezionato: ", difficulty);
+  let numSquare;
+  switch (difficulty) {
+    case "1":
+    default:
+      numSquare = 100;
+      break;
+    case "2":
+      numSquare = 81;
+      break;
+    case "3":
+      numSquare = 49;
+      break;
+  }
+  maxScore = numSquare - totalBombs
+  let squareperSide = Math.sqrt(numSquare);
+  console.log("celle per lato: ", squareperSide);
+  generaGriglia(numSquare, squareperSide);
+  generaBombe(numSquare);
+}
+
+function generaBombe(numSquare) {
+  bombs.length = 0
+  while (bombs.length < totalBombs) {
+    let bombNumber = randomNumber(1, numSquare)
+    if (!bombs.includes(bombNumber)) {
+      bombs.push(bombNumber)
     }
-    let squareperSide = Math.sqrt(numSquare);
-    console.log("celle per lato: ", squareperSide);
-    generaGriglia(numSquare, squareperSide);
   }
-  function generaGriglia(numSquare, squareperSide) {
-    console.log("numero di celle totali: ", numSquare);
-    const gridContainer = document.querySelector(".gridContainer");
-    gridContainer.innerHTML = "";
-    let row = document.createElement("div");
-    row.className = "gridrow";
-    for (let i = 1; i <= numSquare; i++) {
-      const square = generaCella(i, squareperSide);
-      row.append(square);
-    }
-    gridContainer.append(row);
+}
+
+function randomNumber(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max)
+    return Math.floor(Math.random() * max + min)
+}
+
+function generaGriglia(numSquare, squareperSide) {
+  const gridContainer = document.querySelector(".gridContainer");
+  gridContainer.innerHTML = "";
+  let row = document.createElement("div");
+  row.className = "gridrow";
+  for (let i = 1; i <= numSquare; i++) {
+    const square = generaCella(i, squareperSide);
+    row.append(square);
   }
-  function generaCella(num, squareperSide) {
-    let square = document.createElement("div");
-    square.className = "box";
-    square.style.width = `calc(100% / ${squareperSide})`;
-    square.style.height = `calc(100% / ${squareperSide})`;
-    square.classList.add("pointer");
-    square.innerHTML = `<span>${num}</span>`;
-    square.addEventListener("click", coloraCella);
-    return square;
+  gridContainer.append(row);
+}
+
+function generaCella(num, squareperSide) {
+  let square = document.createElement("div");
+  square.className = "box";
+  square.style.width = `calc(100% / ${squareperSide})`;
+  square.style.height = `calc(100% / ${squareperSide})`;
+  square.classList.add("pointer");
+  square.innerHTML = `<span>${num}</span>`;
+  square.addEventListener("click", coloraCella);
+  return square;
+}
+
+function coloraCella() {
+  let num = parseInt(this.innerText);
+  if(bombs.includes(num)){
+    this.classList.add("redBg");
   }
-  function coloraCella() {
+  else {
     this.classList.add("blueBg");
-    this.classList.remove("pointer");
-    this.removeEventListener("click", coloraCella);
+    score++
+    if (score === maxScore) {
+      alert("Hai vinto!");
+    }
   }
-  
-  document.getElementById("play").addEventListener("click", setdifficulty);
-  
+  this.classList.remove("pointer");
+  this.removeEventListener("click", coloraCella);
+}
+
+document.getElementById("play").addEventListener("click", setdifficulty);
