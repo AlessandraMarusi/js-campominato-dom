@@ -102,7 +102,6 @@ function setdifficulty(event) {
   }
   maxScore = numSquare - totalBombs
   let squareperSide = Math.sqrt(numSquare);
-  console.log("celle per lato: ", squareperSide);
   generaGriglia(numSquare, squareperSide);
   generaBombe(numSquare);
 }
@@ -150,6 +149,7 @@ function coloraCella() {
   let num = parseInt(this.innerText);
   if(bombs.includes(num)){
     this.classList.add("redBg");
+    lostGame()
   }
   else {
     this.classList.add("blueBg");
@@ -160,6 +160,20 @@ function coloraCella() {
   }
   this.classList.remove("pointer");
   this.removeEventListener("click", coloraCella);
+}
+function lostGame(){
+  allCells = document.getElementsByClassName("box")
+  console.log(allCells)
+  console.log(allCells.length)
+  for (let i = 0; i < allCells.length; i++) {
+    let cellNum = parseInt(allCells[i].innerText);
+    allCells[i].removeEventListener("click", coloraCella);
+    allCells[i].classList.remove("pointer");
+    if (bombs.includes(cellNum)) {
+      allCells[i].classList.add("redBg");
+    }
+  }
+  alert("Hai perso!");
 }
 
 document.getElementById("play").addEventListener("click", setdifficulty);
